@@ -1,0 +1,54 @@
+*{
+	font-family: Montserrat;
+}
+#cont{
+	display:flex;
+	justify-content: space-around;
+
+}
+#right, #left{
+	min-height: 400px;
+	display:flex;
+	align-items: center;
+	flex-direction: column;
+	width:48%;
+	border: 1px solid black;
+	border-radius: 20px;
+}
+#finish{
+	display:flex;
+	justify-content: center;
+}
+#resultado{
+	width:200px;
+	display:flex;
+	align-items: center;
+	flex-direction:column;
+}
+#puntosJugador, #puntosBanca{
+	display:flex;
+	justify-content: center;
+}
+#left>h2{
+	margin-bottom: 8px;
+}
+#right>h2{
+	margin-bottom: 40px;
+}
+#buttons{
+	margin-bottom: 10px;
+}
+.center{
+	align-items: center;
+	text-align: center;
+}
+#resultado>h1{
+	margin-bottom: 2px;
+}
+#resultado>h3{
+	margin: 5px 0 5px 0;
+}
+#money{
+	display:flex;
+	justify-content: center;
+}
