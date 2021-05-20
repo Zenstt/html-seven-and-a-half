@@ -1,17 +1,17 @@
 "use strict";
 // Array con la baraja una vez se cree
-var baraja = [];
+var deck = [];
 // Puntos internos del Jugador y la banca
-var puntosJugador = 0;
-var puntosBanca = 0;
+var playerPoints = 0;
+var enemyPoints = 0;
 // Racha de victorias seguidas
-var racha = 0;
+var streak = 0;
 // Variable con el dinero de la apuesta
-var apuesta = 0;
+var bet = 0;
 // Variable con el dinero del jugador al empezar
-var dinero = 1000;
+var money = 1000;
 // Variable para mostrar cuanto ha ganado/perdido el jugador
-var diferencia = 0;
+var diff = 0;
 // Variable donde se guardará el intervalo
 var interval;
 
@@ -25,16 +25,16 @@ $(document).ready(function() {
 		plantarse();
 	});
 	$("#apostar").click(function() {
-		apuesta = parseInt($("#select").val());
-		dinero-=apuesta;
-		if (dinero<0){
-			dinero+=apuesta;
-			alert('No tienes dinero para apostar');
+		bet = parseInt($("#select").val());
+		money-=bet;
+		if (money<0){
+			money+=bet;
+			alert('You have no money to bet');
 		} else {
-			diferencia-=apuesta;
+			diff-=bet;
 			reiniciar();
 			$("#apostar").attr('disabled', true);
-			$("#money").html('Dinero: '+dinero+'€');
+			$("#money").html('Money: '+money+'€');
 			pedirCarta(true)
 		}
 	});
@@ -45,7 +45,7 @@ $(document).ready(function() {
  */
 function crearBaraja() {
 	var palos = ['bastos', 'oros', 'copas', 'espadas'];
-	baraja = [];
+	deck = [];
 	for (let palo of palos) {
 		for (let i = 1; i < 11; i++) {
 			let carta = {
@@ -57,10 +57,10 @@ function crearBaraja() {
 			if (i > 7) {
 				carta.valor = 0.5;
 			}
-			baraja.push(carta);
+			deck.push(carta);
 		}
 	}
-	barajar(baraja);
+	barajar(deck);
 }
 /**
  * Función que devuelve un array pasado como parámetro con orden aleatorio de sus elementos
@@ -82,23 +82,23 @@ function barajar(array) {
  * @return {Function}         Función para comprobar si has perdido o has ganado (true o false)
  */
 function pedirCarta(jugador) {
-	if (baraja.length) {
-		let number = Math.floor(Math.random() * baraja.length);
-		let card = baraja[number];
-		baraja.splice(number, 1);
+	if (deck.length) {
+		let number = Math.floor(Math.random() * deck.length);
+		let card = deck[number];
+		deck.splice(number, 1);
 		if (jugador) {
-			puntosJugador += card.valor;
+			playerPoints += card.valor;
 			$("#cartasJugador").append('<img src="img/'+card.numero+card.palo+'.jpg" >');
-			$("#puntosJugador").html(puntosJugador);
+			$("#puntosJugador").html(playerPoints);
 			return comprobante(true);
 		} else {
-			puntosBanca += card.valor;
+			enemyPoints += card.valor;
 			$("#cartasBanca").append('<img src="img/'+card.numero+card.palo+'.jpg" >');
-			$("#puntosBanca").html(puntosBanca);
+			$("#puntosBanca").html(enemyPoints);
 			return comprobante(false);
 		}
 	} else {
-		alert("No quedan mas cartas en la baraja, esto debería ser un error del código")
+		alert("No more cards in the deck, this should be an error");
 	}
 }
 /**
@@ -108,22 +108,22 @@ function pedirCarta(jugador) {
  */
 function comprobante(jugador) {
 	if (jugador) {
-		if (puntosJugador > 7.5) {
-			$("#resultado").html("<h1>Has perdido</h1><h3>Racha: "+racha+"</h3><h3>Llevas: "+diferencia+"€</h3>");
+		if (playerPoints > 7.5) {
+			$("#resultado").html("<h1>You lost</h1><h3>Streak: "+streak+"</h3><h3>You got: "+diff+"€</h3>");
 			$("#apostar").attr('disabled', false);
-			racha = 0;
+			streak = 0;
 			$("#pedir").attr('disabled', true);
 			$("#plantarse").attr('disabled', true);
 			return true;
 		}
 	} else {
-		if (puntosBanca > 7.5) {
-			racha++;
-			dinero+=apuesta*2;
-			diferencia+=apuesta*2;
-			$("#resultado").html("<h1>Has ganado</h1><h3>Racha: "+racha+"</h3><h3>Llevas: "+diferencia+"€</h3>");
+		if (enemyPoints > 7.5) {
+			streak++;
+			money+=bet*2;
+			diff+=bet*2;
+			$("#resultado").html("<h1>You win</h1><h3>Streak: "+streak+"</h3><h3>You got: "+diff+"€</h3>");
 			$("#apostar").attr('disabled', false);
-			$("#money").html('Dinero: '+dinero+'€');
+			$("#money").html('Money: '+money+'€');
 			return true;
 		}
 	}
@@ -144,18 +144,18 @@ function plantarse() {
 			return;
 		}
 		// Si la banca supera o iguala al jugador, la banca gana y se quita la racha e intervalo
-		if (puntosBanca >= puntosJugador) {
-			$("#resultado").html("<h1>Has perdido</h1><h3>Racha: "+racha+"</h3><h3>Llevas: "+diferencia+"€</h3>");
+		if (enemyPoints >= playerPoints) {
+			$("#resultado").html("<h1>You lost</h1><h3>Streak: "+streak+"</h3><h3>You got: "+diff+"€</h3>");
 			$("#apostar").attr('disabled', false);
-			racha=0;
+			streak=0;
 			clearInterval(interval);
 		}
 	}, 700)
 }
 /** Función que se encarga de devolver todo a sus valores originales */
 function reiniciar() {
-		puntosJugador = 0;
-		puntosBanca = 0;
+		playerPoints = 0;
+		enemyPoints = 0;
 		$("#cartasJugador").html('');
 		$("#cartasBanca").html('');
 		$("#resultado").html('');
