@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<title>Seven and a half</title>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<link rel=stylesheet href="css/style.css">
+</head>
+<body>
+	<div>
+		<h2 id="money">Money: 1000€</h2>
+	</div>
+	<div id="cont">
+		<div id="left">
+			<h2 class="center">Your cards</h2>
+			<div id="buttons" class="center">
+				<select name="" id="select">
+					<option value="5">5€</option>
+					<option value="10">10€</option>
+					<option value="20" selected>20€</option>
+					<option value="50">50€</option>
+					<option value="100">100€</option>
+					<option value="200">200€</option>
+					<option value="500">500€</option>
+				</select>
+				<input type="button" name="" id="apostar" value="Bet">
+				<input type="button" name="" id="pedir" value="Deal" disabled>
+				<input type="button" name=""
+				id="plantarse" value="Show cards" disabled>
+			</div>
+			<div>
+				<div id="cartasJugador" class="center">
+				
+				</div>
+				<div id="puntosJugador">
+					
+				</div>
+			</div>
+		</div>
+		<div id="right">
+			<h2 class="center">Opponent cards</h2>
+			<div>
+				<div id="cartasBanca" class="center">
+				
+				</div>
+				<div id="puntosBanca">
+					
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<div id="finish">
+		<div id="resultado">
+				
+		</div>
+	</div>
+</body>
+<script src="js/index.js"></script>
+</html>
